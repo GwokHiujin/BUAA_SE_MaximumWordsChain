@@ -1,91 +1,92 @@
 ﻿#include "include/api.h"
 #include "include/paramParser.h"
 #include "include/engine.h"
-#include "include/bugReport.h"
 #include <ctime>
 
 double timeCost;
 char *apiResult[20005];
 int apiLen = 0;
 
-extern "C" __declspec(dllexport) int gen_chains_all(const char *words) {
-    apiLen = 0;
+extern "C" __declspec(dllexport) int gen_chains_all(const char *words, char *result[]) {
     rawWords.clear();
     for (auto &i: apiResult) {
         i = nullptr;
     }
-    try {
-        paramParser parser = paramParser();
 
-        clock_t t1 = clock();
-        parser.parseWords(words);
-        int options[8] = {0};
-        options[OP_N] = 1;
-        apiLen = engine(options, apiResult);
-        clock_t t2 = clock();
-        timeCost = (double) (t2 - t1) / CLOCKS_PER_SEC;
-    } catch (bugReport &e) {
-        e.errorReport();
+    paramParser parser = paramParser();
+
+    clock_t t1 = clock();
+    parser.parseWords(words);
+    int options[8] = {0};
+    options[OP_N] = 1;
+    apiLen = engine(options, result);
+    clock_t t2 = clock();
+    timeCost = (double) (t2 - t1) / CLOCKS_PER_SEC;
+
+
+    for (int i = 0; i < apiLen; i++) {
+        apiResult[i] = result[i];
     }
-
     return apiLen;
 }
 
 extern "C" __declspec(dllexport) int
-gen_chain_word(const char *words, char head, char tail, char prohibit, bool enable_loop) {
-    apiLen = 0;
+gen_chain_word(const char *words, char *result[], char head, char tail, char prohibit,
+               bool enable_loop) {
     rawWords.clear();
     for (auto &i: apiResult) {
         i = nullptr;
     }
 
-    try {
-        paramParser parser = paramParser();
+    paramParser parser = paramParser();
 
-        clock_t t1 = clock();
-        parser.parseWords(words);
-        int options[8] = {0};
-        options[OP_W] = 1;
-        options[OP_H] = head;
-        options[OP_T] = tail;
-        options[OP_J] = prohibit;
-        options[OP_R] = enable_loop;
-        apiLen = engine(options, apiResult);
-        clock_t t2 = clock();
-        timeCost = (double) (t2 - t1) / CLOCKS_PER_SEC;
-    } catch (bugReport &e) {
-        e.errorReport();
+    clock_t t1 = clock();
+    parser.parseWords(words);
+    int options[8] = {0};
+    options[OP_W] = 1;
+    options[OP_H] = head;
+    options[OP_T] = tail;
+    options[OP_J] = prohibit;
+    options[OP_R] = enable_loop;
+    apiLen = engine(options, result);
+    clock_t t2 = clock();
+    timeCost = (double) (t2 - t1) / CLOCKS_PER_SEC;
+
+
+    for (int i = 0; i < apiLen; i++) {
+        apiResult[i] = result[i];
     }
-
     return apiLen;
 }
 
 extern "C" __declspec(dllexport) int
-gen_chain_char(const char *words, char head, char tail, char prohibit, bool enable_loop) {
+gen_chain_char(const char *words, char *result[], char head, char tail, char prohibit,
+               bool enable_loop) {
     apiLen = 0;
     rawWords.clear();
     for (auto &i: apiResult) {
         i = nullptr;
     }
 
-    try {
-        paramParser parser = paramParser();
-        clock_t t1 = clock();
-        parser.parseWords(words);
-        int options[8] = {0};
-        options[OP_C] = 1;
-        options[OP_H] = head;
-        options[OP_T] = tail;
-        options[OP_J] = prohibit;
-        options[OP_R] = enable_loop;
-        apiLen = engine(options, apiResult);
 
-        clock_t t2 = clock();
-        timeCost = (double) (t2 - t1) / CLOCKS_PER_SEC;
-    } catch (bugReport &e) {
-        e.errorReport();
+    paramParser parser = paramParser();
+    clock_t t1 = clock();
+    parser.parseWords(words);
+    int options[8] = {0};
+    options[OP_C] = 1;
+    options[OP_H] = head;
+    options[OP_T] = tail;
+    options[OP_J] = prohibit;
+    options[OP_R] = enable_loop;
+    apiLen = engine(options, result);
+
+    clock_t t2 = clock();
+    timeCost = (double) (t2 - t1) / CLOCKS_PER_SEC;
+
+
+    for (int i = 0; i < apiLen; i++) {
+        apiResult[i] = result[i];
     }
-
     return apiLen;
 }
 
