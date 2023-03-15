@@ -4,6 +4,10 @@
 > 核心程序开发源代码仓库: https://github.com/GwokHiujin/BUAA_SE_PairProgramming
 >
 > GUI 开发源代码仓库: https://github.com/GwokHiujin/BUAA_SE_GUI
+>
+> ---
+> 
+> 由于第一次 push step1 的时候存在技术失误，没有 push 到有效的源代码（step3 才发现 orz），所以在 step3 之后回滚了代码版本，重新 push 了 step1
 
 ---
 
