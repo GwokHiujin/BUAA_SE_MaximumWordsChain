@@ -29,6 +29,7 @@ async function createWindow() {
     }
   })
 
+  win.removeMenu()
   win.setTitle('Maximum-Words-Chain_Gen')
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {

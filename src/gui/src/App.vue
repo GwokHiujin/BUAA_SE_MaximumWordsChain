@@ -264,11 +264,11 @@ import saveAs from 'file-saver'
 const ffi = require('ffi-napi')
 const myDll = ffi.Library('./core.dll', {
   gen_chains_all: ['int',
-    ['string', 'int', 'string']],
+    ['string']],
   gen_chain_word: ['int',
-    ['string', 'int', 'string', 'char', 'char', 'char', 'bool']],
+    ['string', 'char', 'char', 'char', 'bool']],
   gen_chain_char: ['int',
-    ['string', 'int', 'string', 'char', 'char', 'char', 'bool']],
+    ['string', 'char', 'char', 'char', 'bool']],
   get_execution_time: ['double',
     []],
   getResult: ['string',
@@ -451,9 +451,7 @@ export default {
         that.results = "";
         // gen_chains_all
         if (that.calType === "1") {
-          let curNum = myDll.gen_chains_all(that.rawWords + '\x1a',
-              0,
-              "");
+          let curNum = myDll.gen_chains_all(that.rawWords + '\x1a');
           if (curNum < 0) {
             that.exceptionMsg = curNum === -12 ?
                 "您输入的单词文本中存在环" : curNum === -13 ?
@@ -477,8 +475,6 @@ export default {
           that.results = "";
           // gen_chain_word
           let curNum = myDll.gen_chain_word(that.rawWords + '\x1a',
-              0,
-              "",
               that.headLetterMust === 'none' ? 0 : that.headLetterMust.charCodeAt(0),
               that.tailLetterMust === 'none' ? 0 : that.tailLetterMust.charCodeAt(0),
               that.headLetterNot === 'none' ? 0 : that.headLetterNot.charCodeAt(0),
@@ -506,8 +502,6 @@ export default {
           that.results = "";
           // gen_chain_char
           let curNum = myDll.gen_chain_char(that.rawWords + '\x1a',
-              0,
-              "",
               that.headLetterMust === 'none' ? 0 : that.headLetterMust.charCodeAt(0),
               that.tailLetterMust === 'none' ? 0 : that.tailLetterMust.charCodeAt(0),
               that.headLetterNot === 'none' ? 0 : that.headLetterNot.charCodeAt(0),
