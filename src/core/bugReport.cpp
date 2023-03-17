@@ -1,4 +1,5 @@
 #include "include/bugReport.h"
+#include <string>
 
 void bugReport::printMsg(const string &msg) {
     cout << msg << endl;
